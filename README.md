@@ -1,33 +1,46 @@
-# Simulador Seguridad
+# 🛡️ Simulador de Seguridad
 
-Este es un simulador web que demuestra principios básicos de seguridad (por ejemplo: navegación privada, protección de datos, etc.).
+Este es un simulador web educativo que demuestra principios básicos de ciberseguridad, como el uso de contraseñas seguras y la detección de amenazas como el phishing.
 
-## Archivos
+Permite a los usuarios responder preguntas y guarda automáticamente los resultados en una hoja de cálculo de Google.
 
-- `index.html`: Página principal del simulador.
-- `script .js`: Lógica JavaScript para las interacciones.
-- `styles .css`: Estilos visuales de la interfaz.
+---
 
-## Cómo usar
+## 🚀 Ver en línea
 
-1. Clona el repositorio.
-2. Abre `index.html` en tu navegador.
-3. Explora la funcionalidad del simulador.
+👉 [Simulador en GitHub Pages](https://gabriel1234123.github.io/simulador-seguridad/)
 
-## Autor
+---
 
-Gabriel1234123
+## 🧠 Características
 
-## Características
+- ✅ Cuestionario interactivo con 2 preguntas
+- ✅ Registro de nombre y puntaje
+- ✅ Almacenamiento automático en Google Sheets
+- ✅ Interfaz moderna y adaptable
+- ✅ Código abierto y fácilmente editable
 
-- Simulación de conceptos de seguridad como navegación privada y protección de datos.
-- Interfaz interactiva desarrollada con HTML, CSS y JavaScript.
+---
 
-## Captura de Pantalla
+## 📂 Estructura del Proyecto
 
-![screenshot](ruta/a/una/imagen.png)  ← Puedes agregar una imagen mostrando el simulador.
 
-## Créditos
 
-Desarrollado por Gabriel1234123
+---
+
+## 🛠️ Tecnologías utilizadas
+
+- HTML5
+- CSS3
+- JavaScript
+- Google Apps Script (para guardar en Sheets)
+- GitHub Pages (para publicar el sitio)
+
+---
+
+## 📥 Cómo usar o editar
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/Gabriel1234123/simulador-seguridad.git
 

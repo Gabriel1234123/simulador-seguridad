@@ -5,8 +5,8 @@ Este es un simulador web que demuestra principios básicos de seguridad (por eje
 ## Archivos
 
 - `index.html`: Página principal del simulador.
-- `script (5).js`: Lógica JavaScript para las interacciones.
-- `styles (4).css`: Estilos visuales de la interfaz.
+- `script .js`: Lógica JavaScript para las interacciones.
+- `styles .css`: Estilos visuales de la interfaz.
 
 ## Cómo usar
 

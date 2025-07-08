@@ -1,59 +1,84 @@
-// Reemplaza con tu URL del Apps Script
-const endpoint = "https://script.google.com/macros/s/AKfycbz0KyGJwqtKv6NrbyyvwWtqFB1itYgV9okbSDkZPQdTziiP9LIkDwqfQxkNGpbWqwv8iQ/exec";
+const preguntas = [
+  {
+    pregunta: "¿Qué es phishing?",
+    opciones: ["Un tipo de ataque", "Un navegador", "Un antivirus"],
+    correcta: 0
+  },
+  {
+    pregunta: "¿Qué debes hacer con correos sospechosos?",
+    opciones: ["Responder rápido", "Ignorarlos o reportarlos", "Compartirlos"],
+    correcta: 1
+  },
+  {
+    pregunta: "¿Qué es una contraseña segura?",
+    opciones: ["123456", "miNombre", "K2$rT!9vLx"],
+    correcta: 2
+  }
+];
 
-// Variables de control
+let preguntaActual = 0;
+let puntaje = 0;
 let nombreUsuario = "";
-let puntajeFinal = 0;
 
-// Capturar el nombre y ocultar el campo
-document.addEventListener("DOMContentLoaded", function () {
-  const nombreInput = document.getElementById("nombre");
-  const botonInicio = document.getElementById("inicio");
-  const seccionSimulador = document.getElementById("simulador");
-
-  botonInicio.addEventListener("click", function () {
-    nombreUsuario = nombreInput.value.trim();
-    if (nombreUsuario === "") {
-      alert("Por favor ingresa tu nombre.");
-      return;
-    }
-    document.getElementById("inicioContainer").style.display = "none";
-    seccionSimulador.style.display = "block";
-  });
-});
-
-// Manejador de preguntas
-function responderPregunta(puntaje) {
-  puntajeFinal += puntaje;
-  mostrarSiguientePregunta();
+function iniciarSimulador() {
+  nombreUsuario = document.getElementById("nombre").value.trim();
+  if (!nombreUsuario) {
+    alert("Por favor, ingresa tu nombre.");
+    return;
+  }
+  document.getElementById("inicioContainer").style.display = "none";
+  document.getElementById("simulador").style.display = "block";
+  mostrarPregunta();
 }
 
-// Simulación simple: solo una pregunta para ejemplo
-function mostrarSiguientePregunta() {
-  document.getElementById("preguntaContainer").innerHTML = `
-    <h2>Simulación completada</h2>
-    <p>Tu puntaje final es: <strong>${puntajeFinal}</strong></p>
-    <button onclick="guardarDatos()">Guardar resultado</button>
+function mostrarPregunta() {
+  const p = preguntas[preguntaActual];
+  const contenedor = document.getElementById("preguntaContainer");
+  contenedor.innerHTML = `
+    <h2>${p.pregunta}</h2>
+    ${p.opciones.map((opcion, i) =>
+      `<button onclick="responderPregunta(${i})">${opcion}</button>`
+    ).join("")}
   `;
 }
 
-// Guardar en Google Sheets
-function guardarDatos() {
-  fetch(endpoint, {
-    method: "POST",
+function responderPregunta(indice) {
+  if (indice === preguntas[preguntaActual].correcta) {
+    puntaje++;
+  }
+
+  preguntaActual++;
+  if (preguntaActual < preguntas.length) {
+    mostrarPregunta();
+  } else {
+    mostrarResultado();
+  }
+}
+
+function mostrarResultado() {
+  document.getElementById("preguntaContainer").innerHTML = `
+    <h2>Simulación completada</h2>
+    <p>Puntaje: ${puntaje} de ${preguntas.length}</p>
+    <button onclick="guardarResultado()">Guardar Resultado</button>
+  `;
+}
+
+function guardarResultado() {
+  fetch('https://script.google.com/macros/s/AKfycbz0KyGJwqtKv6NrbyyvwWtqFB1itYgV9okbSDkZPQdTziiP9LIkDwqfQxkNGpbWqwv8iQ/exec', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       nombre: nombreUsuario,
-      puntaje: puntajeFinal
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-    .then(res => res.text())
-    .then(data => {
-      alert("✅ ¡Datos guardados correctamente!");
+      puntaje: puntaje
     })
-    .catch(err => {
-      alert("❌ Error al guardar: " + err);
-    });
+  })
+  .then(response => response.text())
+  .then(data => {
+    alert("✅ Resultado guardado correctamente.");
+  })
+  .catch(error => {
+    alert("❌ Error al guardar: " + error);
+  });
 }
+
+document.getElementById("inicio").addEventListener("click", iniciarSimulador);

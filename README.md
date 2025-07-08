@@ -17,3 +17,17 @@ Este es un simulador web que demuestra principios básicos de seguridad (por eje
 ## Autor
 
 Gabriel1234123
+
+## Características
+
+- Simulación de conceptos de seguridad como navegación privada y protección de datos.
+- Interfaz interactiva desarrollada con HTML, CSS y JavaScript.
+
+## Captura de Pantalla
+
+![screenshot](ruta/a/una/imagen.png)  ← Puedes agregar una imagen mostrando el simulador.
+
+## Créditos
+
+Desarrollado por Gabriel1234123
+

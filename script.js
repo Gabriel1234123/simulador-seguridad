@@ -1,72 +1,59 @@
-const preguntas = [
-  {
-    texto: "¿Cuál es una contraseña segura?",
-    opciones: ["123456", "miNombre123", "K!9$eR#2"],
-    correcta: 2
-  },
-  {
-    texto: "¿Qué es phishing?",
-    opciones: ["Un tipo de ataque", "Un navegador", "Un antivirus"],
-    correcta: 0
-  }
-];
+// Reemplaza con tu URL del Apps Script
+const endpoint = "https://script.google.com/macros/s/AKfycbz0KyGJwqtKv6NrbyyvwWtqFB1itYgV9okbSDkZPQdTziiP9LIkDwqfQxkNGpbWqwv8iQ/exec";
 
-let actual = 0;
-let puntos = 0;
+// Variables de control
+let nombreUsuario = "";
+let puntajeFinal = 0;
 
-function mostrarPregunta() {
-  const q = preguntas[actual];
-  document.getElementById("question").textContent = q.texto;
-  const answersDiv = document.getElementById("answers");
-  answersDiv.innerHTML = "";
+// Capturar el nombre y ocultar el campo
+document.addEventListener("DOMContentLoaded", function () {
+  const nombreInput = document.getElementById("nombre");
+  const botonInicio = document.getElementById("inicio");
+  const seccionSimulador = document.getElementById("simulador");
 
-  q.opciones.forEach((opcion, i) => {
-    const btn = document.createElement("button");
-    btn.textContent = opcion;
-    btn.onclick = () => {
-      if (i === q.correcta) puntos++;
-      actual++;
-      if (actual < preguntas.length) {
-        mostrarPregunta();
-      } else {
-        guardarYMostrar();
-      }
-    };
-    answersDiv.appendChild(btn);
+  botonInicio.addEventListener("click", function () {
+    nombreUsuario = nombreInput.value.trim();
+    if (nombreUsuario === "") {
+      alert("Por favor ingresa tu nombre.");
+      return;
+    }
+    document.getElementById("inicioContainer").style.display = "none";
+    seccionSimulador.style.display = "block";
   });
+});
+
+// Manejador de preguntas
+function responderPregunta(puntaje) {
+  puntajeFinal += puntaje;
+  mostrarSiguientePregunta();
 }
 
-function guardarYMostrar() {
-  const nombre = document.getElementById("nombre").value;
-  if (!nombre.trim()) {
-    alert("Por favor escribe tu nombre");
-    return;
-  }
+// Simulación simple: solo una pregunta para ejemplo
+function mostrarSiguientePregunta() {
+  document.getElementById("preguntaContainer").innerHTML = `
+    <h2>Simulación completada</h2>
+    <p>Tu puntaje final es: <strong>${puntajeFinal}</strong></p>
+    <button onclick="guardarDatos()">Guardar resultado</button>
+  `;
+}
 
-  const datos = {
-    nombre: nombre,
-    puntaje: puntos
-  };
-
-  fetch("https://script.google.com/macros/s/AKfycby4fait2mpKh25ETpyzNm91h6NypbE_ENndTRHB0AzrgCRDzpNDyhCFss18j7n8fFg5tg/exec", {
+// Guardar en Google Sheets
+function guardarDatos() {
+  fetch(endpoint, {
     method: "POST",
-    body: JSON.stringify(datos),
+    body: JSON.stringify({
+      nombre: nombreUsuario,
+      puntaje: puntajeFinal
+    }),
     headers: {
       "Content-Type": "application/json"
     }
   })
-  .then(res => res.text())
-  .then(resp => {
-    document.getElementById("quiz").style.display = "none";
-    document.getElementById("final").style.display = "block";
-    document.getElementById("final").innerText =
-      `¡Gracias ${nombre}! Obtuviste ${puntos}/${preguntas.length}. Tus datos han sido registrados.`;
-  })
-  .catch(err => {
-    alert("Error al guardar: " + err.message);
-    console.error("Fetch error:", err);
-  });
+    .then(res => res.text())
+    .then(data => {
+      alert("✅ ¡Datos guardados correctamente!");
+    })
+    .catch(err => {
+      alert("❌ Error al guardar: " + err);
+    });
 }
-
-document.getElementById("nextBtn").onclick = mostrarPregunta;
-mostrarPregunta();

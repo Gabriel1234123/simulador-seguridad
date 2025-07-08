@@ -43,7 +43,7 @@ function guardarYMostrar() {
     puntaje: puntos
   };
 
-  fetch("https://script.google.com/macros/s/AKfycbyIUf-r4A-bGTXdoLwzV7Utl0BIJvLuR46A_dVCn5qCldU61fI5v47vk9k4ZzddvXiFXg/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbz7a7qYd-LVbW8OpW5aPze6SxnHD3Ie6ii4XRRKVK2qVyYs6EEJsf-C0W7eKJr-octN/exec", {
     method: "POST",
     body: JSON.stringify(datos),
     headers: { "Content-Type": "application/json" }

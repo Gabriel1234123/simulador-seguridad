@@ -48,7 +48,6 @@ function guardarYMostrar() {
     puntaje: puntos
   };
 
-  // 👉 Asegúrate de que esta URL es la TUYA
   fetch("https://script.google.com/macros/s/AKfycby4fait2mpKh25ETpyzNm91h6NypbE_ENndTRHB0AzrgCRDzpNDyhCFss18j7n8fFg5tg/exec", {
     method: "POST",
     body: JSON.stringify(datos),
@@ -60,7 +59,8 @@ function guardarYMostrar() {
   .then(resp => {
     document.getElementById("quiz").style.display = "none";
     document.getElementById("final").style.display = "block";
-    document.getElementById("final").innerText = `¡Gracias ${nombre}! Obtuviste ${puntos}/${preguntas.length}. Tus datos han sido registrados.`;
+    document.getElementById("final").innerText =
+      `¡Gracias ${nombre}! Obtuviste ${puntos}/${preguntas.length}. Tus datos han sido registrados.`;
   })
   .catch(err => {
     alert("Error al guardar: " + err.message);

@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Simulador de Seguridad</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <h1>Simulador de Seguridad</h1>
-
-  <label for="nombre">Tu nombre:</label><br />
-  <input type="text" id="nombre" placeholder="Escribe tu nombre" /><br /><br />
-
-  <div id="quiz">
-    <h2 id="question">Pregunta aparecerá aquí</h2>
-    <div id="answers"></div>
-    <button id="nextBtn">Siguiente</button>
+  <div id="inicioContainer">
+    <h1>Simulador de Seguridad</h1>
+    <label for="nombre">Tu nombre:</label>
+    <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+    <button id="inicio">Iniciar simulador</button>
   </div>
 
-  <div id="final" class="correcto" style="display:none;"></div>
+  <div id="simulador" style="display: none;">
+    <div id="preguntaContainer">
+      <h2>¿Qué es phishing?</h2>
+      <button onclick="responderPregunta(1)">Un tipo de ataque</button>
+      <button onclick="responderPregunta(0)">Un navegador</button>
+      <button onclick="responderPregunta(0)">Un antivirus</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
